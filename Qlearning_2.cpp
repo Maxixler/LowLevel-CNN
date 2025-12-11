@@ -129,8 +129,8 @@ private:
         for(int i=0; i < width * height; ++i) indices[i] = i;
 
         // Shuffle indices
-        std::random_device rd;
-        std::mt19937 g(rd());
+        unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+        std::mt19937 g(seed);
         std::shuffle(indices.begin(), indices.end(), g);
 
         int count = 0;
@@ -212,8 +212,8 @@ private:
             }
             
             if (!obstacles.empty()) {
-                std::random_device rd;
-                std::mt19937 g(rd());
+                unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+                std::mt19937 g(seed);
                 std::shuffle(obstacles.begin(), obstacles.end(), g);
                 
                 int remove_count = std::min((int)obstacles.size(), 5);
@@ -278,8 +278,8 @@ public:
         
         q_table.resize(maze.height, std::vector<std::vector<float>>(maze.width, std::vector<float>(4, 0.0f)));
         
-        std::random_device rd;
-        rng.seed(rd());
+        unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+        rng.seed(seed);
     }
 
     int get_action(int x, int y, int tx, int ty) {
@@ -356,8 +356,8 @@ std::vector<float> train_agent(PerfectMaze& maze, PerfectSolver& agent, int epis
     int height = maze.height;
     
     std::mt19937 rng;
-    std::random_device rd;
-    rng.seed(rd());
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    rng.seed(seed);
     std::uniform_int_distribution<int> w_dist(0, width - 1);
     std::uniform_int_distribution<int> h_dist(0, height - 1);
 
